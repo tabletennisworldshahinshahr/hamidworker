@@ -1,0 +1,35 @@
+{
+  "name": "ai-recipe-generator",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "url": "^0.11.4",
+    "esbuild": "^0.26.0",
+    "glob": "^11.0.3",
+    "terser": "^5.44.1",
+    "html-minifier": "^4.0.0",
+    "jszip": "^3.10.1",
+    "javascript-obfuscator": "^4.1.1",
+    "zlib": "^1.0.5",
+    "jose": "^6.1.0",
+    "auth": "^1.2.3",
+    "kv": "^1.1.1",
+    "types": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

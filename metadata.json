@@ -1,0 +1,5 @@
+{
+  "name": "AI Recipe Generator",
+  "description": "Generate creative recipes based on the ingredients you have on hand. This app uses the Gemini API to suggest delicious meals, helping you reduce food waste and discover new culinary ideas.",
+  "requestFramePermissions": []
+}
