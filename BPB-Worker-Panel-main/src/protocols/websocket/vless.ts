@@ -10,10 +10,10 @@ declare const WebSocketPair: any;
 
 export async function VlOverWSHandler(request: Request): Promise<Response> {
     const webSocketPair = new WebSocketPair();
-    const [client, webSocket] = Object.values(webSocketPair);
+    // FIX: Explicitly type the WebSocket objects from WebSocketPair.
+    const [client, webSocket]: [WebSocket, WebSocket] = Object.values(webSocketPair);
 
-    // FIX: Property 'accept' does not exist on type 'unknown'.
-    (webSocket as any).accept();
+    webSocket.accept();
 
     let address = "";
     let portWithRandomLog = "";
@@ -23,8 +23,7 @@ export async function VlOverWSHandler(request: Request): Promise<Response> {
     };
 
     const earlyDataHeader = request.headers.get("sec-websocket-protocol") || "";
-    // FIX: Argument of type 'unknown' is not assignable to parameter of type 'WebSocket'.
-    const readableWebSocketStream = makeReadableWebSocketStream(webSocket as any, earlyDataHeader, log);
+    const readableWebSocketStream = makeReadableWebSocketStream(webSocket, earlyDataHeader, log);
 
     let remoteSocketWapper: { value: any } = { value: null };
     let udpStreamWrite: any = null;
@@ -68,8 +67,7 @@ export async function VlOverWSHandler(request: Request): Promise<Response> {
                 if (isUDP) {
                     if (portRemote === 53) {
                         isDns = true;
-                        // FIX: Argument of type 'unknown' is not assignable to parameter of type 'WebSocket'.
-                        const { write } = await handleUDPOutBound(webSocket as any, VLResponseHeader, log);
+                        const { write } = await handleUDPOutBound(webSocket, VLResponseHeader, log);
                         udpStreamWrite = write;
                         udpStreamWrite(rawClientData);
                         return;
@@ -78,13 +76,12 @@ export async function VlOverWSHandler(request: Request): Promise<Response> {
                     }
                 }
 
-                // FIX: Argument of type 'unknown' is not assignable to parameter of type 'WebSocket'.
                 handleTCPOutBound(
                     remoteSocketWapper,
                     addressRemote,
                     portRemote,
                     rawClientData,
-                    webSocket as any,
+                    webSocket,
                     VLResponseHeader,
                     log
                 );

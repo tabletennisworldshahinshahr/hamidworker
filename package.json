@@ -24,7 +24,8 @@
     "jose": "^6.1.0",
     "auth": "^1.2.3",
     "kv": "^1.1.1",
-    "types": "^0.1.1"
+    "types": "^0.1.1",
+    "@google/genai": "^1.29.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

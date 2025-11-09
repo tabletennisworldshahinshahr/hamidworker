@@ -10,10 +10,10 @@ export async function getDataset(
     let proxySettings: Settings | null, warpAccounts: WarpAccount[] | null;
 
     try {
-        // FIX: Argument of type '{ type: string; }' is not assignable to parameter of type '"text" | "json" | "arrayBuffer" | "stream"'.
-        proxySettings = await env.kv.get("proxySettings", "json");
-        // FIX: Argument of type '{ type: string; }' is not assignable to parameter of type '"text" | "json" | "arrayBuffer" | "stream"'.
-        warpAccounts = await env.kv.get('warpAccounts', 'json');
+        // FIX: Cast return type from KV store to ensure type safety.
+        proxySettings = await env.kv.get("proxySettings", "json") as Settings | null;
+        // FIX: Cast return type from KV store to ensure type safety.
+        warpAccounts = await env.kv.get('warpAccounts', 'json') as WarpAccount[] | null;
 
         if (!proxySettings) {
             await env.kv.put("proxySettings", JSON.stringify(settings));
@@ -45,8 +45,8 @@ export async function updateDataset(request: Request, env: Env): Promise<Setting
     let currentSettings: Settings | null;
 
     try {
-        // FIX: Argument of type '{ type: string; }' is not assignable to parameter of type '"text" | "json" | "arrayBuffer" | "stream"'.
-        currentSettings = await env.kv.get("proxySettings", "json");
+        // FIX: Cast return type from KV store to ensure type safety.
+        currentSettings = await env.kv.get("proxySettings", "json") as Settings | null;
     } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         console.log(message);

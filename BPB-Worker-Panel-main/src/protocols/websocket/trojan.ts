@@ -5,9 +5,9 @@ declare const WebSocketPair: any;
 
 export async function TrOverWSHandler(request: Request): Promise<Response> {
     const webSocketPair = new WebSocketPair();
-    const [client, webSocket] = Object.values(webSocketPair);
-    // FIX: Property 'accept' does not exist on type 'unknown'.
-    (webSocket as any).accept();
+    // FIX: Explicitly type the WebSocket objects from WebSocketPair.
+    const [client, webSocket]: [WebSocket, WebSocket] = Object.values(webSocketPair);
+    webSocket.accept();
 
     let address = "";
     let portWithRandomLog = "";
@@ -17,8 +17,7 @@ export async function TrOverWSHandler(request: Request): Promise<Response> {
     };
 
     const earlyDataHeader = request.headers.get("sec-websocket-protocol") || "";
-    // FIX: Argument of type 'unknown' is not assignable to parameter of type 'WebSocket'.
-    const readableWebSocketStream = makeReadableWebSocketStream(webSocket as any, earlyDataHeader, log);
+    const readableWebSocketStream = makeReadableWebSocketStream(webSocket, earlyDataHeader, log);
 
     let remoteSocketWapper: { value: any } = { value: null };
     let udpStreamWrite: any = null;
@@ -52,13 +51,12 @@ export async function TrOverWSHandler(request: Request): Promise<Response> {
                     throw new Error(message);
                 }
 
-                // FIX: Argument of type 'unknown' is not assignable to parameter of type 'WebSocket'.
                 handleTCPOutBound(
                     remoteSocketWapper,
                     addressRemote,
                     portRemote,
                     rawClientData,
-                    webSocket as any,
+                    webSocket,
                     null,
                     log
                 );
